@@ -35,17 +35,22 @@ class CheckAuth
 }
 
 ```
-#### 方式一 使用包自带的Model
+#### 单独验证
+方式一 使用包自带的Model
 ```
 <?php
 use xiaodi/Permission/Models/User;
 
 $uid = 1;
 $user = (new User)->getInfo(1);
-$user->can('path');
+$user = (new User)->getInfo(1);
+
+if (!$user->can('path')) {
+   // 没有权限
+} 
 ```
 
-#### 方式二 创建一个Model 继承包对应的Model
+创建一个Model 继承包对应的Model
 ```
 <?php
 namepsace app/path;
@@ -59,5 +64,7 @@ class User extends Model
 
 $uid = 1;
 $user = (new User)->getInfo(1);
-$user->can('path');
+if (!$user->can('path')) {
+   // 没有权限
+} 
 ```
