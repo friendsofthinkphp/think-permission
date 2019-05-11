@@ -73,7 +73,7 @@ trait HasPermissions
 
 
     /**
-     * 验证是否有些权限
+     * 验证是否有此权限
      *
      * @param [type] $path
      * @return boolean

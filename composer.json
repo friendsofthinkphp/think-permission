@@ -6,6 +6,8 @@
             "email": "saybabi@163.com"
         }
     ],
+    "homepage": "https://xiaodim.com/",
+    "license": "Apache-2.0",
     "require": {
         "php": ">=5.6.0",
         "topthink/framework": "5.1.*"
