@@ -1,0 +1,18 @@
+{
+    "name": "xiaodi/think-permission",
+    "authors": [
+        {
+            "name": "xiaodit",
+            "email": "saybabi@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "topthink/framework": "5.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "xiaodi\\Permission\\": "src"
+        }
+    }
+}
