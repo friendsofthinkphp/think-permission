@@ -6,7 +6,7 @@ composer require xiaodi/think-permission
 ```
 
 ### 权限验证
-#### 方式一 使用包已带的Model
+#### 方式一 使用包自带的Model
 ```
 <?php
 use xiaodi/Permission/Models/User;
