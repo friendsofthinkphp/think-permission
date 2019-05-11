@@ -6,6 +6,35 @@ composer require xiaodi/think-permission
 ```
 
 ### 权限验证
+#### 中间件验证
+```
+<?php
+namespace app\admin\middleware;
+
+use app\service\models\User;
+use think\facade\Config;
+
+class CheckAuth
+{
+    public function handle($request, \Closure $next)
+    {
+        if ($request->controller() != 'Auth') {
+          
+          $uid = '';
+          $user = (new User)->getInfo($uid);
+          $pathInfo = dispatchPath();
+
+          // 检测权限
+          if (!$user->can($pathInfo)) {
+              // 没有权限
+          }
+        }
+
+        return $next($request);
+    }
+}
+
+```
 #### 方式一 使用包自带的Model
 ```
 <?php
