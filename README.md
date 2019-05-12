@@ -67,3 +67,23 @@ if (!$user->can('path')) {
    // 没有权限
 } 
 ```
+
+#### 生成Token
+```
+<?php
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Parser;
+
+// 登录验证代码...
+$uid = '登录之后，获取到的uid';
+
+// 生成一个3天过期的Token
+$token = (new Builder())
+    ->setIssuedAt(time())
+    ->setExpiration(time() + (86400 * 3))
+    ->set('uid', $uid)
+    ->getToken();
+
+$token = (string) $token;
+echo $token;
+```
