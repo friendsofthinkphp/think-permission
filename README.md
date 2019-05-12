@@ -6,35 +6,27 @@ composer require xiaodi/think-permission
 ```
 
 ### 权限验证
-#### 中间件验证
+#### 注册容器(推荐)
+注册容器后，你可以在程序任何地方使用
+模块或应用根目录 `provider.php`
 ```
 <?php
-namespace app\admin\middleware;
 
-use app\service\models\User;
-use think\facade\Config;
-
-class CheckAuth
-{
-    public function handle($request, \Closure $next)
-    {
-        if ($request->controller() != 'Auth') {
-          
-          $uid = '';
-          $user = (new User)->getInfo($uid);
-          $pathInfo = dispatchPath();
-
-          // 检测权限
-          if (!$user->can($pathInfo)) {
-              // 没有权限
-          }
-        }
-
-        return $next($request);
-    }
-}
+return [
+    'Permission'      => \app\service\PermissionProvider::class,
+];
 
 ```
+
+控制器、Model、中间件中调用方法
+```
+// 获取登录的用户对象
+app('Permission')->user()
+
+// 验证权限
+app("Permission")->user()->can('path')
+```
+
 #### 单独验证
 方式一 使用包自带的Model
 ```
