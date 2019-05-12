@@ -27,6 +27,14 @@ app('Permission')->user()
 app("Permission")->user()->can('path')
 ```
 
+#### 配合中间件
+模块或应用根目录 `middleware.php`
+```
+<?php
+return [
+    "\\xiaodi\\Permission\\Middlewares\\Auth"
+];
+```
 #### 单独验证
 方式一 使用包自带的Model
 ```
