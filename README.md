@@ -43,7 +43,6 @@ use xiaodi/Permission/Models/User;
 
 $uid = 1;
 $user = (new User)->getInfo(1);
-$user = (new User)->getInfo(1);
 
 if (!$user->can('path')) {
    // 没有权限
