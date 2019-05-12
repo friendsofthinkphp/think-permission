@@ -10,9 +10,17 @@ use xiaodi\Permission\Validate\Permission as Validate;
  */
 class Permission extends Model
 {
-    protected $table = 'pg_auth_rule';
+    public function __construct($data = [])
+    {
+        $prefix = config('database.prefix');
+        $name = config('permission.tables.permission');
+        $table = [$prefix, $name];
 
-    protected $pk = 'id';
+        $this->pk = 'id';
+        $this->table = implode('', $table);
+
+        parent::__construct($data);
+    }
 
     /**
      * 数据验证

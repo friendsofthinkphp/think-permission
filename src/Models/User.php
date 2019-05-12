@@ -14,9 +14,16 @@ class User extends Model
 {
     use HasPermissions;
 
-    protected $table = 'pg_admin';
+    public function __construct($data = [])
+    {
+        $prefix = config('database.prefix');
+        $name = config('permission.tables.admin');
+        $table = [$prefix, $name];
 
-    protected $pk = 'admin_id';
+        $this->pk = 'admin_id';
+        $this->table = implode('', $table);
+        parent::__construct($data);
+    }
 
     protected $autoWriteTimestamp = true;
 
