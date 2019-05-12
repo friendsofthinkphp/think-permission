@@ -1,5 +1,5 @@
-# think-permission
-
+# ThinkPHP5.1 权限认证
+* Jwt Token  [lcobucci/jwt](https://github.com/lcobucci/jwt)
 ### 安装
 ```
 composer require xiaodi/think-permission
