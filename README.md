@@ -7,7 +7,7 @@ composer require xiaodi/think-permission
 
 ### 权限验证
 #### 注册容器(推荐)
-注册容器后，你可以在程序任何地方使用
+注册容器后，你可以在程序任何地方使用  
 模块或应用根目录 `provider.php`
 ```
 <?php
