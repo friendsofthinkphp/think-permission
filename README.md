@@ -120,5 +120,5 @@ $token = (string) $token;
 echo $token;
 ```
 
-#### Sql ceshiyixia
+#### Sql
 [数据表](https://github.com/xiaodit/think-admin/blob/master/sql/tables.sql)
