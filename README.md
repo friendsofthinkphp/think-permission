@@ -10,6 +10,7 @@ composer require xiaodi/think-permission
 <?php
 return [
     'auth_super_id'     => 1,
+    
     'tables' => [
         // 后台用户表
         'admin' => 'admin',
@@ -22,6 +23,17 @@ return [
 
         // 中间表
         'role_access' => 'auth_group_access'
+    ],
+
+    'validate' => [
+        'type' => '1',      // 认证方式 1: Jwt-token；2: Session
+        'jwt' => [
+            'header' => 'authorization',
+            'key' => 'uid'  // 签发参数 claim 
+        ],
+        'session' => [
+            'key' => 'uid'  // session name
+        ]
     ]
 ];
 ```
