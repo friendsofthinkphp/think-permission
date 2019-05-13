@@ -26,6 +26,11 @@ class PermissionProvider
     public function __construct()
     {
         // todo
+        if (null != config('permission.validate')) {
+            $config = config('permission.validate');
+            $this->config = array_merge($this->config, $config);
+        }
+        
         $this->request = request();
     }
 

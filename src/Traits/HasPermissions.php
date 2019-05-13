@@ -32,7 +32,7 @@ trait HasPermissions
      */
     public function getAllPermissions(): Array
     {
-        if ($this->admin_id === config('permission.auth_super_id')) {
+        if ($this->id === config('permission.auth_super_id')) {
             return $this->getPermissions();
         }
 

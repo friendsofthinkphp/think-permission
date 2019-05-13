@@ -20,7 +20,7 @@ class User extends Model
         $name = config('permission.tables.admin');
         $table = [$prefix, $name];
 
-        $this->pk = 'admin_id';
+        $this->pk = 'id';
         $this->table = implode('', $table);
         parent::__construct($data);
     }
@@ -101,7 +101,7 @@ class User extends Model
             $user->save($data);
 
             // 删除角色重新分配
-            $user->RoleAccess()->where('user_id', $user->admin_id)->delete();
+            $user->RoleAccess()->where('user_id', $user->id)->delete();
 
             $roles = $data['roles'];
             foreach($roles as $role) {
@@ -130,7 +130,7 @@ class User extends Model
             }
 
             $user = $this->getInfo($id);
-            $user->RoleAccess()->where('user_id', $user->admin_id)->delete();
+            $user->RoleAccess()->where('user_id', $user->id)->delete();
             $user->delete();
             Db::commit();
         } catch (\Exception $e) {
