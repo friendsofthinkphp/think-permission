@@ -4,148 +4,40 @@ namespace xiaodi\Permission\Models;
 use think\Db;
 use think\Model;
 use xiaodi\Permission\Validate\User as Validate;
+use xiaodi\Permission\Traits\HasRoles;
 use xiaodi\Permission\Traits\HasPermissions;
+use xiaodi\Permission\Contract\User as UserContract;
+use think\model\relation\BelongsToMany;
 
-/**
- * 后台用户
- * 
- */
-class User extends Model
+class User extends Model implements UserContract
 {
+    use HasRoles;
     use HasPermissions;
 
     public function __construct($data = [])
     {
         $prefix = config('database.prefix');
-        $name = config('permission.tables.admin');
-        $table = [$prefix, $name];
-
-        $this->pk = 'id';
-        $this->table = implode('', $table);
+        $table = config('permission.tables.admin');
+        if ($prefix) {
+            $table = implode('', [$prefix, $table]);
+        }
+        
+        $this->table = $table;
         parent::__construct($data);
     }
 
-    protected $autoWriteTimestamp = true;
-
-    public function setAdminPasswordAttr($value)
+    public function findById(int $id)
     {
-        return password_hash($value, PASSWORD_DEFAULT);
+        $user = $this->get($id);
+
+        return $user;
     }
 
-    public function RoleAccess()
+    public function findByName(string $name)
     {
-        $permissions = $this->hasMany(
-            "RoleAccess",
-            "user_id"
-        );
-
-        return $permissions;
-    }
-
-    /**
-     * 数据验证
-     * @param array $data
-     * @param string $scene
-     */
-    public static function validate($data, $scene)
-    {
-        $validate = new Validate;
-
-        if (!$validate->scene($scene)->check($data)) {
-            exception($validate->getError());
-        }
-    }
-
-    /**
-     * 注册用户
-     * @param array $data
-     */
-    public function addUser(array $data)
-    {
-
-        Db::startTrans();
-        try {
-            $roles = $data['roles'];
-            self::validate($data, 'create');
-            $this->save($data);
-
-            foreach($roles as $role) {
-                $data = ['role_id' => $role];
-                $this->RoleAccess()->save($data);
-            }
-
-            Db::commit();
-        } catch (\Exception $e) {
-            Db::rollback();
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 修改用户
-     * @param array $data
-     */
-    public function updateUser(int $id, array $data)
-    {
-        Db::startTrans();
-        try {
-            $user = $this->getInfo($id);
-
-            self::validate($data, 'edit');
-
-            // 重置密码
-            if (isset($data['admin_password'])) {
-                $user->admin_password = password_hash($data['admin_password'], PASSWORD_DEFAULT);
-            }
-
-            $user->save($data);
-
-            // 删除角色重新分配
-            $user->RoleAccess()->where('user_id', $user->id)->delete();
-
-            $roles = $data['roles'];
-            foreach($roles as $role) {
-                $data = ['role_id' => $role];
-                $user->RoleAccess()->save($data);
-            }
-            
-            Db::commit();
-        } catch (\Exception $e) {
-            Db::rollback();
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 删除用户
-     * @param array $params
-     */
-    public function deleteUser($id)
-    {
-        Db::startTrans();
-        try {
-
-            if ($id == config('permission.auth_super_id')) {
-                exception('操作出错');
-            }
-
-            $user = $this->getInfo($id);
-            $user->RoleAccess()->where('user_id', $user->id)->delete();
-            $user->delete();
-            Db::commit();
-        } catch (\Exception $e) {
-            Db::rollback();
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 获取用户信息
-     * @param string|array $id
-     */
-    public function getInfo($map)
-    {
-        $user = $this->getOrFail($map);
+        $user = $this->get([
+            'name' => $name
+        ]);
 
         return $user;
     }

@@ -1,88 +1,80 @@
 <?php
 namespace xiaodi\Permission\Traits;
 
-use think\model\Collection;
-use think\model\relation\BelongsToMany;
 use xiaodi\Permission\Models\Permission;
+use xiaodi\Permission\Exceptions\PermissionAlreadyExists;
 
 trait HasPermissions
 {
 
     /**
-     * 获取多对多关联对象
-     * 调用 $user->permissions
-     * 
-     * @return BelongsToMany
+     * 获取(用户直接，角色)分配的权限
+     *
+     * @return void
      */
-    public function getPermissionsAttr(): BelongsToMany
+    public function permissions()
     {
-        $permissions = $this->belongsToMany(
-            "xiaodi\\Permission\\Models\\Role",
-            "xiaodi\\Permission\\Models\\RoleAccess"
-        );
-
-        return $permissions;
+        return $this->morphMany(config('permission.models.has_permission'), 'model');
     }
 
     /**
-     * 获取用户所在角色的所有权限
-     * 调用 $user->getAllPermissions()
-     * 
+     * 获取用户所有权限
+     *
      * @return void
      */
-    public function getAllPermissions(): Array
+    public function getAllPermissions()
     {
-        if ($this->id === config('permission.auth_super_id')) {
-            return $this->getPermissions();
+        // 获取直接分配给用户的权限
+        $userPermissions = $this->permissions;
+
+        if ($this->roles) {
+            // 获取用户所属角色的权限
+            foreach($this->roles as $role)
+            {
+                $userPermissions = $userPermissions->merge($role->permissions);
+            }
         }
 
-        $data = $this->permissions->select();
+        return $userPermissions;
+    }
+    
+    /**
+     * 用户、角色添加权限
+     *
+     * @param [type] ...$data
+     * @return void
+     */
+    public function givePermissionTo(...$data)
+    {
+        $exists = array_column($this->permissions->toArray(), 'content');
 
         $permissions = [];
-        foreach($data as $item) {
-            $rules = explode(',', $item->rules);
-            $permissions = array_merge($permissions, $rules);
+        foreach($data as $permission) {
+            if (in_array($permission, $exists)) {
+                throw PermissionAlreadyExists::create($permission);
+            }
+
+            $permissions[] = ['content' => $permission];
+
+        }
+ 
+        if (!empty($permission)) {
+            $this->permissions()->saveAll($permissions);
         }
 
-        $permissions = array_unique($permissions);
-        return $permissions;
     }
 
     /**
-     * 获取所有规则列表
+     * 判断用户、角色是否有此权限
      *
-     * @return void
-     */
-    protected function getPermissions()
-    {
-        return (new Permission)->where('pid', '<>', 0)->column('id');
-    }
-
-    /**
-     * 获取用户所有角色列表
-     * 调用 $user->getRoleNames()
-     * 
-     * @return void
-     */
-    public function getRoleNames(): Collection
-    {
-        $permissions = $this->permissions;
-
-        return $permissions->select();
-    }
-
-
-    /**
-     * 验证是否有此权限
-     *
-     * @param [type] $path
+     * @param [type] $name
      * @return boolean
      */
-    public function can($path)
+    public function can($name)
     {
-        $permissions = $this->getAllPermissions();
-        $rules = (new Permission)->where('id', 'in', $permissions)->column('name');
-
-        return in_array($path, $rules);
+        $permissions = array_column($this->getAllPermissions()->toArray(), 'content');
+        
+        return in_array($name, $permissions);
     }
+    
 }

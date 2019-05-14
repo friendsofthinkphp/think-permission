@@ -2,16 +2,21 @@
 namespace xiaodi\Permission\Models;
 
 use think\Model;
-use xiaodi\Permission\Validate\Role as Validate;
 
+use think\model\relation\BelongsToMany;
+use xiaodi\Permission\Traits\HasRoles;
 use xiaodi\Permission\Traits\HasPermissions;
+use xiaodi\Permission\Contract\Role as RoleContract;
 
 /**
  * 角色模型
  * 
  */
-class Role extends Model
+class Role extends Model implements RoleContract
 {
+    use HasRoles;
+    use HasPermissions;
+
     public function __construct($data = [])
     {
         $prefix = config('database.prefix');
@@ -25,116 +30,29 @@ class Role extends Model
     }
 
     /**
-     * 数据验证
-     * @param array $data
-     * @param string $scene
-     */
-    public static function validate($data, $scene)
-    {
-        $validate = new Validate;
-
-        if (!$validate->scene($scene)->check($data)) {
-            exception($validate->getError());
-        }
-    }
-
-    /**
-     * 添加
-     * @param array $data
-     */
-    public function add(array $data)
-    {
-        try {
-            self::validate($data, 'create');
-            $this->save($data);
-        } catch (\Exception $e) {
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 修改角色
-     * @param array $data
-     */
-    public function edit($id, array $data)
-    {
-        try {
-            $role = $this->getInfo($id);
-            self::validate($data, 'update');
-            $role->syncPermissions($data['rules']);
-        } catch (\Exception $e) {
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 角色权限（重新分配）
+     * 通过id获取详情
      *
-     * @param [type] $permissions
+     * @param integer $id
      * @return void
      */
-    public function syncPermissions($permissions)
+    public function findById(int $id)
     {
-        $this->rules = implode(',', $permissions);
-        $this->save();
+        $res = $this->get($id);
+        return $res;
     }
 
     /**
-     * 角色权限（单独追加）
+     * 通过name获取详情
      *
+     * @param string $name
      * @return void
      */
-    public function givePermissionTo($permission)
+    public function findByName(string $name)
     {
-        $rules = $this->explode(',', $this->rules);
-        if (!in_array($permission, $rules)) {
-            array_unshift($rules, $permission);
-            $this->rules = $rules;
-            $this->save();
-        }
-    }
-
-    /**
-     * 角色权限（单独删除）
-     *
-     * @param [type] $permission
-     * @return void
-     */
-    public function revokePermissionTo($permission)
-    {
-        $permissions = $this->explode(',', $this->rules);
-        if (in_array($permission, $permissions)) {
-            $res = array_keys($permissions, $permission);
-            array_splice($permissions, $res[0], 1);
-
-            $this->rules = implode(',', $permissions);
-            $this->save();
-        }
-    }
-
-    /**
-     * 删除角色
-     * @param string|int $id
-     */
-    public function deleteRole($id)
-    {
-        try {
-            $info = $this->getInfo($id);
-            $info->delete();
-        } catch (\Exception $e) {
-            exception($e->getMessage());
-        }
-    }
-
-    /**
-     * 获取角色详情
-     * @param int|string $id
-     *
-     */
-    public function getInfo($id)
-    {
-        $res = $this->getOrFail($id);
-
+        $res = $this->get([
+            'name' => $name
+        ]);
+        
         return $res;
     }
 }
