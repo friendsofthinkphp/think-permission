@@ -122,3 +122,31 @@ echo $token;
 
 #### Sql
 [数据表](https://github.com/xiaodit/think-admin/blob/master/sql/tables.sql)
+
+### 例子
+
+```
+// 角色配置
+// 获取角色下所有用户
+// dump((new Role)->findById(1)->users);
+
+// 获取角色分配的权限
+// dump((new Role)->findById(1)->permissions);
+
+// 分配角色权限
+// dump((new Role)->findById(1)->givePermissionTo('rule-view'));
+
+
+// 用户配置
+// 直接分配用户权限（不经过角色分配）
+// dump((new User)->findById(1)->givePermissionTo('role-view'));
+
+// 获取用户直接分配的权限
+// dump((new User)->findById(1)->permissions());
+
+// 获取用户所有权限
+// dump((new User)->findById(1)->getAllPermissions());
+
+// 判断用户是否有此权限
+// dump((new User)->findById(1)->can('haha'));
+```
