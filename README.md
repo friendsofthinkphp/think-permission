@@ -10,19 +10,28 @@ composer require xiaodi/think-permission
 <?php
 return [
     'auth_super_id'     => 1,
-    
+    // 模型 可自行更换自己的 但必须要实现对应的接口
+    'models' => [
+        'user' => \xiaodi\Permission\Models\User::class,
+
+        'role' => \xiaodi\Permission\Models\Role::class,
+
+        'permission' => \xiaodi\Permission\Models\Permission::class
+    ],
+
+    // 引入数据表
     'tables' => [
         // 后台用户表
-        'admin' => 'admin',
-        
+        'admin' => 'new_admin',
+
         // 角色表
-        'role' => 'auth_group',
+        'role' => 'new_auth_role',
 
         // 规则表
-        'permission' => 'auth_rule',
+        'permission' => 'new_auth_permission',
 
         // 中间表
-        'role_access' => 'auth_group_access'
+        'role_access' => 'new_auth_role_access'
     ],
 
     'validate' => [
