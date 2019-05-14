@@ -11,18 +11,33 @@ composer require xiaodi/think-permission
 return [
     'auth_super_id'     => 1,
     
+    'models' => [
+        'user' => \xiaodi\Permission\Models\User::class,
+
+        'role' => \xiaodi\Permission\Models\Role::class,
+
+        'role_access' => \xiaodi\Permission\Models\RoleAccess::class,
+
+        'has_permission' => \xiaodi\Permission\Models\HasPermissionAccess::class,
+
+        'permission' => \xiaodi\Permission\Models\Permission::class
+    ],
+
     'tables' => [
         // 后台用户表
-        'admin' => 'admin',
+        'admin' => 'new_auth_admin',
         
         // 角色表
-        'role' => 'auth_group',
+        'role' => 'new_auth_role',
 
         // 规则表
-        'permission' => 'auth_rule',
+        'permission' => 'new_auth_permission',
+
+        // 多态关联表
+        'has_permission' => 'new_has_permission',
 
         // 中间表
-        'role_access' => 'auth_group_access'
+        'role_access' => 'new_auth_role_access'
     ],
 
     'validate' => [
