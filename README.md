@@ -138,6 +138,9 @@ echo $token;
 
 
 // 用户配置
+// 获取用户所有角色
+// dump((new User)->findById(1)->roles);
+
 // 直接分配用户权限（不经过角色分配）
 // dump((new User)->findById(1)->givePermissionTo('role-view'));
 
