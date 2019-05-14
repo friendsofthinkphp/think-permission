@@ -167,4 +167,7 @@ echo $token;
 
 // 判断用户是否有此权限
 // dump((new User)->findById(1)->can('haha'));
+
+// 获取拥有指定权限的用户
+// dump(User::permission('haha')->select());
 ```
