@@ -70,11 +70,22 @@ trait HasPermissions
      * @param [type] $name
      * @return boolean
      */
-    public function can($name)
+    public function can(stirng $name)
     {
         $permissions = array_column($this->getAllPermissions()->toArray(), 'content');
         
         return in_array($name, $permissions);
     }
-    
+
+    /**
+     * 获取指定权限的用户
+     *
+     * @param [type] $name
+     * @return void
+     */
+    public static function permission(string $name)
+    {
+        return (new self())->permissions()->where('content', $name);
+    }
+
 }

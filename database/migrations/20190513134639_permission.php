@@ -51,8 +51,8 @@ class Permission extends Migrator
         // 多态关联(用户与角色中间表)
         $table = $this->table($tables['has_permission'], array('engine'=>'MyISAM'));
         $table->addColumn('content', 'string', array('limit' => 50,'default'=>'','comment'=>''))
-            ->addColumn('common_id', 'integer', array('limit' => 11,'comment'=>''))
-            ->addColumn('common_type', 'string', array('limit' => 50,'default'=>'','comment'=>''))
+            ->addColumn('model_id', 'integer', array('limit' => 11,'comment'=>''))
+            ->addColumn('model_type', 'string', array('limit' => 50,'default'=>'','comment'=>''))
             ->create();
     }
 }
