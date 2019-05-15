@@ -89,7 +89,7 @@ return [
 use xiaodi/Permission/Models/User;
 
 $uid = 1;
-$user = (new User)->getInfo(1);
+$user = (new User)->findById(1);
 
 if (!$user->can('path')) {
    // 没有权限
@@ -109,7 +109,7 @@ class User extends Model
 }
 
 $uid = 1;
-$user = (new User)->getInfo(1);
+$user = (new User)->findById(1);
 if (!$user->can('path')) {
    // 没有权限
 } 
