@@ -65,7 +65,7 @@ trait HasPermissions
     }
 
     /**
-     * 判断用户、角色是否有此权限
+     * 判断用户是否有此权限
      *
      * @param [type] $name
      * @return boolean

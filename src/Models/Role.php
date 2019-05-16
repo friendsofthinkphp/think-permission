@@ -29,6 +29,11 @@ class Role extends Model implements RoleContract
         parent::__construct($data);
     }
 
+    public function revokePermissionTo(string $name)
+    {
+        $this->permissions()->where('content', 'in', $name)->delete();
+    }
+
     /**
      * 通过id获取详情
      *

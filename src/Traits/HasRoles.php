@@ -18,7 +18,9 @@ trait HasRoles
     {
         $roles = $this->belongsToMany(
             config('permission.models.role'),
-            config('permission.models.role_access')
+            config('permission.tables.user_role_access'),
+            'role_id',
+            'user_id'
         );
 
         return $roles;
@@ -33,7 +35,7 @@ trait HasRoles
     {
         return $this->belongsToMany(
             config('permission.models.user'),
-            config('permission.models.role_access')
+            config('permission.tables.user_role_access')
         );
     }
 }

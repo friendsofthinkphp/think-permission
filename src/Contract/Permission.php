@@ -3,7 +3,9 @@ namespace xiaodi\Permission\Contract;
 
 interface Permission
 {
-    public function findById(int $id);
+    public function roles();
 
-    public function findByName(string $name);
+    public function getById(int $id);
+
+    public function getByName(string $name);
 }
