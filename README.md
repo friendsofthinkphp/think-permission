@@ -89,7 +89,7 @@ return [
 use xiaodi/Permission/Models/User;
 
 $uid = 1;
-$user = (new User)->getInfo(1);
+$user = (new User)->findById(1);
 
 if (!$user->can('path')) {
    // 没有权限
@@ -109,7 +109,7 @@ class User extends Model
 }
 
 $uid = 1;
-$user = (new User)->getInfo(1);
+$user = (new User)->findById(1);
 if (!$user->can('path')) {
    // 没有权限
 } 
@@ -190,6 +190,6 @@ echo $token;
 // 判断用户是否有此权限
 // dump((new User)->findById(1)->can('haha'));
 
-// 获取具有某权限的用户
+// 获取拥有指定权限的用户
 // dump(User::permission('haha')->select());
 ```
