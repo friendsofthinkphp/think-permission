@@ -32,27 +32,35 @@ class Permission extends Migrator
 
         // 规则表
         $table = $this->table($tables['permission'], array('engine'=>'MyISAM'));
-        $table->addColumn('name', 'string', array('limit' => 100,'default'=>'','comment'=>'规则名称'))
+        $table->addColumn('name', 'string', array('limit' => 100,'comment'=>'规则名称'))
             ->addIndex(array('name'), array('unique' => true))
             ->create();
 
-        // 角色
+        // 角色表
         $table = $this->table($tables['role'], array('engine'=>'MyISAM'));
-        $table->addColumn('name', 'string', array('limit' => 100,'default'=>'','comment'=>'角色名称'))
+        $table->addColumn('name', 'string', array('limit' => 100,'comment'=>'角色名称'))
             ->addIndex(array('name'), array('unique' => true))
             ->create();
+
+        // 角色与规则 多对多中间表
+        $table = $this->table($tables['role_permission_access'], array('engine'=>'MyISAM'));
+        $table->addColumn('role_id', 'integer', array('comment'=>'角色主键'))
+            ->addColumn('permission_id', 'integer', array('comment'=>'规则主键'))
+            ->addIndex(array('permission_id', 'role_id'), array('unique' => true))
+            ->create();
         
-        // 中间表
-        $table = $this->table($tables['role_access'], array('engine'=>'MyISAM'));
-        $table->addColumn('user_id', 'integer', array('limit' => 11,'comment'=>'用户id'))
-            ->addColumn('role_id', 'integer', array('limit' => 11,'comment'=>'角色id'))
+        // 角色与用户 多对多中间表
+        $table = $this->table($tables['user_role_access'], array('engine'=>'MyISAM'));
+        $table->addColumn('user_id', 'integer', array('comment'=>'用户id'))
+            ->addColumn('role_id', 'integer', array('comment'=>'角色id'))
+            ->addIndex(array('user_id', 'role_id'), array('unique' => true))
             ->create();
         
         // 多态关联(用户与角色中间表)
         $table = $this->table($tables['has_permission'], array('engine'=>'MyISAM'));
-        $table->addColumn('content', 'string', array('limit' => 50,'default'=>'','comment'=>''))
-            ->addColumn('model_id', 'integer', array('limit' => 11,'comment'=>''))
-            ->addColumn('model_type', 'string', array('limit' => 50,'default'=>'','comment'=>''))
+        $table->addColumn('content', 'string', array('limit' => 50))
+            ->addColumn('model_id', 'integer', array('comment'=>'模型主键'))
+            ->addColumn('model_type', 'string', array('limit' => 50,'comment'=>'模型命名空间'))
             ->create();
     }
 }
