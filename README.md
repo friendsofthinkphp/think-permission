@@ -141,30 +141,55 @@ echo $token;
 ### 例子
 
 ```
+// 权限配置
+// 创建规则
+// dump(Permission::create(['name' => 'view']));
+
+// 分配此权限给角色
+// dump((new Permission)->getById(1)->assignRole('writer'));
+
+// 获取拥有此权限的角色
+// dump((new Permission)->getById(1)->roles);
+
+// 删除已分配到角色的权限
+// dump((new Permission)->getById(1)->removeRole('writer'));
+
 // 角色配置
+// 创建角色
+// dump(Role::create(['name' => 'writer']));
+
 // 获取角色下所有用户
 // dump((new Role)->findById(1)->users);
 
 // 获取角色分配的权限
-// dump((new Role)->findById(1)->permissions);
+// dump((new Role)->findById(1)->users);
 
 // 分配角色权限
 // dump((new Role)->findById(1)->givePermissionTo('rule-view'));
 
 
 // 用户配置
-// 获取用户所有角色
-// dump((new User)->findById(1)->roles);
+// 创建用户
+// dump(User::create(['name' => 'xiaodi']));
 
 // 直接分配用户权限（不经过角色分配）
 // dump((new User)->findById(1)->givePermissionTo('role-view'));
 
+// 给用户分配角色
+// dump((new User)->findById(1)->assignRole('writer'));
+
+// 获取用户的角色
+// dump((new User)->findById(1)->roles);
+
 // 获取用户直接分配的权限
-// dump((new User)->findById(1)->permissions());
+// dump((new User)->findById(1)->permissions);
 
 // 获取用户所有权限
 // dump((new User)->findById(1)->getAllPermissions());
 
 // 判断用户是否有此权限
 // dump((new User)->findById(1)->can('haha'));
+
+// 获取具有某权限的用户
+// dump(User::permission('haha')->select());
 ```
