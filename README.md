@@ -16,28 +16,29 @@ return [
 
         'role' => \xiaodi\Permission\Models\Role::class,
 
-        'role_access' => \xiaodi\Permission\Models\RoleAccess::class,
-
         'has_permission' => \xiaodi\Permission\Models\HasPermissionAccess::class,
 
         'permission' => \xiaodi\Permission\Models\Permission::class
     ],
 
     'tables' => [
-        // 后台用户表
-        'admin' => 'new_auth_admin',
+        // 用户表
+        'user' => 'auth_user',
         
         // 角色表
-        'role' => 'new_auth_role',
+        'role' => 'auth_role',
 
         // 规则表
-        'permission' => 'new_auth_permission',
+        'permission' => 'auth_permission',
 
-        // 多态关联表
-        'has_permission' => 'new_has_permission',
+        // 权限多态关联表(可以分别获取用户、角色的权限)
+        'has_permission' => 'auth_has_permission',
 
-        // 中间表
-        'role_access' => 'new_auth_role_access'
+        // 角色与规则表 多对多 中间表
+        'role_permission_access' => 'auth_role_permission_access',
+
+        // 用户与角色 多对多 中间表
+        'user_role_access' => 'auth_user_role_access'
     ],
 
     'validate' => [
