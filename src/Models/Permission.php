@@ -22,7 +22,7 @@ class Permission extends Model implements PermissionContract
 
         parent::__construct($data);
     }
-
+    
     /**
      * 获取具有此权限的角色
      *
@@ -93,5 +93,6 @@ class Permission extends Model implements PermissionContract
 
     public function getByName(string $name)
     {
+        return $this->get(['name' => $name]);
     }
 }

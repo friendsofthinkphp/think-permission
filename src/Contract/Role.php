@@ -11,8 +11,8 @@ interface Role
 
     public function permissions();
 
-    public function findById(int $id);
+    public function getById(int $id);
 
-    public function findByName(string $name);
+    public function getByName(string $name);
 
 }

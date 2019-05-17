@@ -45,14 +45,14 @@ class User extends Model implements UserContract
         }
     }
 
-    public function findById(int $id)
+    public function getById(int $id)
     {
         $user = $this->get($id);
 
         return $user;
     }
 
-    public function findByName(string $name)
+    public function getByName(string $name)
     {
         $user = $this->get([
             'name' => $name

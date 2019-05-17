@@ -19,7 +19,7 @@ interface User
      * @param integer $id
      * @return void
      */
-    public function findById(int $id);
+    public function getById(int $id);
 
     /**
      * 通过name获取详情
@@ -27,5 +27,5 @@ interface User
      * @param string $name
      * @return void
      */
-    public function findByName(string $name);
+    public function getByName(string $name);
 }

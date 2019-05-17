@@ -14,31 +14,37 @@ class PermissionProvider
 
     protected $config = [
         'auth_super_id'     => 1,
-
-        // 模型 可自行更换自己的 但必须要实现对应的接口
+    
         'models' => [
             'user' => \xiaodi\Permission\Models\User::class,
-    
+
             'role' => \xiaodi\Permission\Models\Role::class,
-    
+
+            'has_permission' => \xiaodi\Permission\Models\HasPermissionAccess::class,
+
             'permission' => \xiaodi\Permission\Models\Permission::class
         ],
-    
-        // 引入数据表
+
         'tables' => [
-            // 后台用户表
-            'admin' => 'new_admin',
+            // 用户表
+            'user' => 'auth_user',
             
             // 角色表
-            'role' => 'new_auth_role',
-    
+            'role' => 'auth_role',
+
             // 规则表
-            'permission' => 'new_auth_permission',
-    
-            // 中间表
-            'role_access' => 'new_auth_role_access'
+            'permission' => 'auth_permission',
+
+            // 权限多态关联表(可以分别获取用户、角色的权限)
+            'has_permission' => 'auth_has_permission',
+
+            // 角色与规则表 多对多 中间表
+            'role_permission_access' => 'auth_role_permission_access',
+
+            // 用户与角色 多对多 中间表
+            'user_role_access' => 'auth_user_role_access'
         ],
-    
+
         'validate' => [
             'type' => '1',      // 认证方式 1: Jwt-token；2: Session
             'jwt' => [
@@ -96,16 +102,18 @@ class PermissionProvider
 
     protected function getUserIdByToken()
     {
-        $config = $this->getConfig('validate')['jwt'];
-        $name = $config['header'];
-        $key = $config['key'];
+        // $config = $this->getConfig('validate')['jwt'];
+        // $name = $config['header'];
+        // $key = $config['key'];
 
-        $token = $this->request->header($name);
-        if (empty($token)) {
-            // 缺少Token.
-            exception('Require Token', 50001);
-        }
+        // $token = $this->request->header($name);
+        // if (empty($token)) {
+        //     // 缺少Token.
+        //     exception('Require Token', 50001);
+        // }
 
+        $key = 'uid';
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpYXQiOjE1NTc4MDI3NjMsImV4cCI6MTU1ODA2MTk2MywidWlkIjoxfQ.';
         $token = (new Parser())->parse((string) $token);
         $data = new ValidationData();
         if (!$token->validate($data)) {

@@ -29,6 +29,44 @@ class Role extends Model implements RoleContract
         parent::__construct($data);
     }
 
+    public function access():BelongsToMany
+    {
+        $permissions = $this->belongsToMany(
+            config('permission.models.permission'),
+            config('permission.tables.role_permission_access'),
+            'permission_id',
+            'role_id'
+        );
+
+        return $permissions;
+    }
+
+    /**
+     * 获取(用户直接，角色)分配的权限
+     *
+     * @return void
+     */
+    public function permissions()
+    {
+        return $this->morphMany(
+            config('permission.models.has_permission'),
+            'model'
+        );
+    }
+
+    /**
+     * 删除角色所有权限
+     *
+     * @return void
+     */
+    public function revokeAllPermission()
+    {
+        $this->permissions()->where('model_id', $this->id)->delete();
+        $this->access()->detach(
+            $this->access()->column('permission_id')
+        );
+    }
+
     public function revokePermissionTo(string $name)
     {
         $this->permissions()->where('content', 'in', $name)->delete();
@@ -40,7 +78,7 @@ class Role extends Model implements RoleContract
      * @param integer $id
      * @return void
      */
-    public function findById(int $id)
+    public function getById(int $id)
     {
         $res = $this->get($id);
         return $res;
@@ -52,7 +90,7 @@ class Role extends Model implements RoleContract
      * @param string $name
      * @return void
      */
-    public function findByName(string $name)
+    public function getByName(string $name)
     {
         $res = $this->get([
             'name' => $name

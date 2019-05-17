@@ -3,10 +3,10 @@ namespace xiaodi\Permission\Exceptions;
 
 use InvalidArgumentException;
 
-class PermissionAlreadyExists extends InvalidArgumentException
+class UnauthorizedException extends InvalidArgumentException
 {
     public static function create(string $permissionName)
     {
-        return new static("此 `{$permissionName}` 已存在数据表中.");
+        return new static("访问出错，你没有此 `{$permissionName}` 权限.");
     }
 }

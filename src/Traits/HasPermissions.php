@@ -14,7 +14,10 @@ trait HasPermissions
      */
     public function permissions()
     {
-        return $this->morphMany(config('permission.models.has_permission'), 'model');
+        return $this->morphMany(
+            config('permission.models.has_permission'),
+            'model'
+        );
     }
 
     /**
@@ -70,7 +73,7 @@ trait HasPermissions
      * @param [type] $name
      * @return boolean
      */
-    public function can(stirng $name)
+    public function can(string $name)
     {
         $permissions = array_column($this->getAllPermissions()->toArray(), 'content');
         
