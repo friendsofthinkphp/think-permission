@@ -1,5 +1,13 @@
-# ThinkPHP5.1 权限认证
+# ThinkPHP Permission
+ThinkPHP5.1 权限包
+
+[![Latest Stable Version](https://poser.pugx.org/xiaodi/think-permission/v/stable)](https://packagist.org/packages/xiaodi/think-permission)
+[![Total Downloads](https://poser.pugx.org/xiaodi/think-permission/downloads)](https://packagist.org/packages/xiaodi/think-permission)
+[![Latest Unstable Version](https://poser.pugx.org/xiaodi/think-permission/v/unstable)](//packagist.org/packages/xiaodi/think-permission)
+[![License](https://poser.pugx.org/xiaodi/think-permission/license)](https://packagist.org/packages/xiaodi/think-permission)
+
 * Jwt Token  [lcobucci/jwt](https://github.com/lcobucci/jwt)
+
 ### 安装
 ```
 composer require xiaodi/think-permission
@@ -61,7 +69,7 @@ return [
 <?php
 
 return [
-    'Permission'      => \app\service\PermissionProvider::class,
+    'Permission'      => \xiaodi\Permission\PermissionProvider::class,
 ];
 
 ```
@@ -72,16 +80,16 @@ return [
 app('Permission')->user()
 
 // 验证权限
-app("Permission")->user()->can('path')
+app("Permission")->user()->can('action')
 ```
 
-#### 配合中间件
-模块或应用根目录 `middleware.php`
+#### 路由中间件
 ```php
 <?php
-return [
-    "\\xiaodi\\Permission\\Middlewares\\Auth"
-];
+
+// 用户必须拥有 ·test-view· 访问权限
+Route::rule('/test', 'admin/index/test', 'GET')
+    ->middleware('\xiaodi\Permission\Middlewares\Permission', 'test-view');
 ```
 #### 单独验证
 方式一 使用包自带的Model
@@ -92,26 +100,7 @@ use xiaodi/Permission/Models/User;
 $uid = 1;
 $user = (new User)->findById(1);
 
-if (!$user->can('path')) {
-   // 没有权限
-} 
-```
-
-创建一个Model 继承包对应的Model
-```php
-<?php
-namepsace app/path;
-
-use xiaodi/Permission/Models/User as Model;
-
-class User extends Model
-{
-  // 其它业务代码
-}
-
-$uid = 1;
-$user = (new User)->findById(1);
-if (!$user->can('path')) {
+if (!$user->can('name')) {
    // 没有权限
 } 
 ```
