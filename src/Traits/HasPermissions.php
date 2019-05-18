@@ -75,6 +75,11 @@ trait HasPermissions
      */
     public function can(string $name)
     {
+        // 超级管理员
+        if ($this->id === config('permission.auth_super_id')) {
+            return true;
+        }
+        
         $permissions = array_column($this->getAllPermissions()->toArray(), 'content');
         
         return in_array($name, $permissions);
