@@ -102,18 +102,16 @@ class PermissionProvider
 
     protected function getUserIdByToken()
     {
-        // $config = $this->getConfig('validate')['jwt'];
-        // $name = $config['header'];
-        // $key = $config['key'];
+        $config = $this->getConfig('validate')['jwt'];
+        $name = $config['header'];
+        $key = $config['key'];
 
-        // $token = $this->request->header($name);
-        // if (empty($token)) {
-        //     // 缺少Token.
-        //     exception('Require Token', 50001);
-        // }
+        $token = $this->request->header($name);
+        if (empty($token)) {
+            // 缺少Token.
+            exception('Require Token', 50001);
+        }
 
-        $key = 'uid';
-        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJub25lIn0.eyJpYXQiOjE1NTc4MDI3NjMsImV4cCI6MTU1ODA2MTk2MywidWlkIjoxfQ.';
         $token = (new Parser())->parse((string) $token);
         $data = new ValidationData();
         if (!$token->validate($data)) {
