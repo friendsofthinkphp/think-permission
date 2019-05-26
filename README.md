@@ -4,8 +4,7 @@ ThinkPHP5.1 权限包
 [![Latest Stable Version](https://poser.pugx.org/xiaodi/think-permission/v/stable)](https://packagist.org/packages/xiaodi/think-permission)
 [![Total Downloads](https://poser.pugx.org/xiaodi/think-permission/downloads)](https://packagist.org/packages/xiaodi/think-permission)
 [![Latest Unstable Version](https://poser.pugx.org/xiaodi/think-permission/v/unstable)](//packagist.org/packages/xiaodi/think-permission)
-[![License](https://poser.pugx.org/xiaodi/think-permission/license)](https://packagist.org/packages/xiaodi/think-permission)
-
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 * Jwt Token  [lcobucci/jwt](https://github.com/lcobucci/jwt)
 
 ### 安装
