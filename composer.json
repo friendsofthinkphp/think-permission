@@ -1,10 +1,10 @@
 {
-    "name": "xiaodi/think-permission",
+    "name": "xiaodii/think-permission",
     "description": "ThinkPHP5.1 权限包",
     "authors": [
         {
-            "name": "xiaodit",
-            "email": "saybabi@163.com"
+            "name": "xiaodi",
+            "email": "liangjinbiao@live.com"
         }
     ],
     "keywords": [
@@ -12,11 +12,11 @@
         "thinkphp-auth"
     ],
     "homepage": "https://xiaodim.com/",
+    "minimum-stability": "dev",
     "license": "MIT",
     "require": {
         "php": ">=5.6.0",
-        "topthink/framework": "5.1.*",
-        "lcobucci/jwt": "v3.2.2"
+        "lcobucci/jwt": "^3.3"
     },
     "autoload": {
         "psr-4": {

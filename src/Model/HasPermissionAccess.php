@@ -1,5 +1,6 @@
 <?php
-namespace xiaodi\Permission\Models;
+
+namespace xiaodi\Permission\Model;
 
 use think\Model;
 

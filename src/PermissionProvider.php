@@ -1,16 +1,11 @@
 <?php
 namespace xiaodi\Permission;
 
-use xiaodi\Permission\Models\User;
-use Lcobucci\JWT\Parser;
-use Lcobucci\JWT\ValidationData;
-use think\facade\Config;
+use xiaodi\Permission\Contract\UserContract as UserInterface;
 
 class PermissionProvider
 {
     protected $user;
-
-    protected $request;
 
     protected $config = [
         'auth_super_id'     => 1,
@@ -43,87 +38,16 @@ class PermissionProvider
 
             // 用户与角色 多对多 中间表
             'user_role_access' => 'auth_user_role_access'
-        ],
-
-        'validate' => [
-            'type' => '1',      // 认证方式 1: Jwt-token；2: Session
-            'jwt' => [
-                'header' => 'authorization',
-                'key' => 'uid'  // 签发参数 claim 
-            ],
-            'session' => [
-                'key' => 'uid'  // session name
-            ]
         ]
     ];
 
     public function __construct()
     {
-        // todo
-        if (null != config('permission.')) {
-            $config = config('permission.');
-            $this->config = array_merge($this->config, $config);
-        }
-        
-        $this->request = request();
     }
 
-    public function user()
+    public function user(UserInterface $user)
     {
-        return $this->getUser();
-    }
-
-    protected function getConfig($type)
-    {
-        return $this->config[$type];
-    }
-
-    protected function getUser()
-    {
-        $config = $this->getConfig('validate');
-        if ($config['type'] == 1) {
-            $uid = $this->getUserIdByToken();
-        } elseif ($config['type'] == 2) {
-            $uid = $this->getUserIdBySession();
-        }
-
-        $class = $this->config['models']['user'];
-        $model = new $class();
-        $this->user = $model->getById($uid);
-
+        $this->user = $user;
         return $this->user;
-    }
-
-    protected function getUserIdBySession()
-    {
-        // todo
-        return 1;
-    }
-
-    protected function getUserIdByToken()
-    {
-        $config = $this->getConfig('validate')['jwt'];
-        $name = $config['header'];
-        $key = $config['key'];
-
-        $token = $this->request->header($name);
-        if (empty($token)) {
-            // 缺少Token.
-            exception('Require Token', 50001);
-        }
-
-        $token = (new Parser())->parse((string) $token);
-        $data = new ValidationData();
-        if (!$token->validate($data)) {
-            // Token过期.
-            exception('Expired Token', 50002);
-        }
-
-        if (empty($uid = $token->getClaim($key))) {
-            // 缺少签发参数.
-            exception('Require Claim', 50003);
-        }
-
-        return $uid;
     }
 }
