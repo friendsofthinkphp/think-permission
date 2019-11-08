@@ -10,7 +10,7 @@ class Role extends Model implements RoleContract
 {
     public function __construct($data = [])
     {
-        $this->name = config('permission.tables.role');
+        $this->name = config('permission.role.table');
 
         parent::__construct($data);
     }
@@ -23,8 +23,8 @@ class Role extends Model implements RoleContract
     public function permissions()
     {
         return $this->belongsToMany(
-            config('permission.models.permission'),
-            config('permission.models.permission_role_access'),
+            config('permission.permission.model'),
+            config('permission.role_permission_access.model'),
             'permission_id',
             'role_id'
         );

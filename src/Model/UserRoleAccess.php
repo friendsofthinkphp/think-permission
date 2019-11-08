@@ -12,7 +12,7 @@ class UserRoleAccess extends Pivot
 
     public function __construct($data = [])
     {
-        $this->name = 'auth_user_role_access';
+        $this->name = config('permission.user_role_access.table');
 
         parent::__construct($data);   
     }

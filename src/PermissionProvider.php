@@ -3,42 +3,44 @@ namespace xiaodi\Permission;
 
 use xiaodi\Permission\Contract\UserContract as UserInterface;
 
+use xiaodi\Permission\Model\User;
+use xiaodi\Permission\Model\Permission;
+use xiaodi\Permission\Model\Role;
+use xiaodi\Permission\Model\PermissionRoleAccess;
+use xiaodi\Permission\Model\UserRoleAccess;
+
 class PermissionProvider
 {
     protected $user;
 
     protected $config = [
-        'auth_super_id'     => 1,
-    
-        'models' => [
-            'user' => \xiaodi\Permission\Models\User::class,
+        'auth_super_id' => 1,
 
-            'role' => \xiaodi\Permission\Models\Role::class,
-
-            'has_permission' => \xiaodi\Permission\Models\HasPermissionAccess::class,
-
-            'permission' => \xiaodi\Permission\Models\Permission::class
+        'user' => [
+            'table' => 'auth_user',
+            'model' => User::class
         ],
 
-        'tables' => [
-            // 用户表
-            'user' => 'auth_user',
-            
-            // 角色表
-            'role' => 'auth_role',
+        'permission' => [
+            'table' => 'auth_permission',
+            'model' => Permission::class
+        ],
 
-            // 规则表
-            'permission' => 'auth_permission',
+        'role' => [
+            'table' => 'auth_role',
+            'model' => Role::class
+        ],
 
-            // 权限多态关联表(可以分别获取用户、角色的权限)
-            'has_permission' => 'auth_has_permission',
+        'role_permission_access' => [
+            'table' => 'auth_role_permission_access',
+            'model' => PermissionRoleAccess::class
+        ],
 
-            // 角色与规则表 多对多 中间表
-            'role_permission_access' => 'auth_role_permission_access',
-
-            // 用户与角色 多对多 中间表
-            'user_role_access' => 'auth_user_role_access'
-        ]
+        'user_role_access' => [
+            'table' => 'auth_user_role_access',
+            'model' => UserRoleAccess::class
+        ],
+       
     ];
 
     public function __construct()

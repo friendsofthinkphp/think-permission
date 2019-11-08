@@ -10,7 +10,7 @@ class User extends Model implements UserContract
 {
     public function __construct($data = [])
     {
-        $this->name = config('permission.tables.user');
+        $this->name = config('permission.user.table');
 
         parent::__construct($data);
     }
@@ -28,8 +28,8 @@ class User extends Model implements UserContract
     public function roles()
     {
         return $this->belongsToMany(
-            config('permission.models.role'),
-            config('permission.models.user_role_access'),
+            config('permission.role.model'),
+            config('permission.user_role_access.model'),
             'role_id',
             'user_id'
         );

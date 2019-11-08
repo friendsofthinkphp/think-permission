@@ -10,7 +10,7 @@ class Permission extends Model implements PermissionContract
 {
     public function __construct($data = [])
     {
-        $this->name = config('permission.tables.permission');
+        $this->name = config('permission.permission.table');
 
         parent::__construct($data);   
     }
@@ -23,8 +23,8 @@ class Permission extends Model implements PermissionContract
     public function roles()
     {
         return $this->belongsToMany(
-            config('permission.models.role'),
-            config('permission.models.permission_role_access'),
+            config('permission.role.model'),
+            config('permission.role_permission_access.model'),
             'role_id',
             'permission_id'
         );
