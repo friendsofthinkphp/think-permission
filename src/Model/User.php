@@ -3,7 +3,6 @@
 namespace xiaodi\Permission\Model;
 
 use think\Model;
-use xiaodi\Permission\Model\Role;
 use xiaodi\Permission\Contract\UserContract;
 
 class User extends Model implements UserContract
@@ -21,7 +20,7 @@ class User extends Model implements UserContract
     }
 
     /**
-     * 获取用户下所有角色
+     * 获取用户下所有角色.
      *
      * @return void
      */
@@ -36,7 +35,7 @@ class User extends Model implements UserContract
     }
 
     /**
-     * 将用户分配到指定角色
+     * 将用户分配到指定角色.
      *
      * @return void
      */
@@ -47,9 +46,10 @@ class User extends Model implements UserContract
     }
 
     /**
-     * 删除指定角色
+     * 删除指定角色.
      *
      * @param [type] $role
+     *
      * @return void
      */
     public function removeRole($role)
@@ -59,23 +59,24 @@ class User extends Model implements UserContract
     }
 
     /**
-     * 检查是否有此权限
+     * 检查是否有此权限.
      *
      * @param [type] $permission
-     * @return boolean
+     *
+     * @return bool
      */
     public function can($permission)
     {
         $permissions = [];
-        foreach($this->roles as $role) {
+        foreach ($this->roles as $role) {
             $permissions = array_merge(
-                $permissions, 
+                $permissions,
                 array_column($role->permissions->toArray(), 'name')
             );
         }
 
         $permissions = array_unique($permissions);
-        
+
         return in_array($permission, $permissions);
     }
 }

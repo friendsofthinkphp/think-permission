@@ -3,7 +3,6 @@
 namespace xiaodi\Permission\Model;
 
 use think\Model;
-use xiaodi\Permission\Model\Role;
 use xiaodi\Permission\Contract\PermissionContract;
 
 class Permission extends Model implements PermissionContract
@@ -12,11 +11,11 @@ class Permission extends Model implements PermissionContract
     {
         $this->name = config('permission.permission.table');
 
-        parent::__construct($data);   
+        parent::__construct($data);
     }
 
     /**
-     * 获取权限所有的角色列表
+     * 获取权限所有的角色列表.
      *
      * @return BelongsToMany
      */
@@ -31,9 +30,10 @@ class Permission extends Model implements PermissionContract
     }
 
     /**
-     * 将当前权限分配到指定角色
+     * 将当前权限分配到指定角色.
      *
      * @param [type] $permission
+     *
      * @return void
      */
     public function assignRole($role)
@@ -43,9 +43,10 @@ class Permission extends Model implements PermissionContract
     }
 
     /**
-     * 移除已分配的角色
+     * 移除已分配的角色.
      *
      * @param [type] $permission
+     *
      * @return void
      */
     public function removeRole($role)
@@ -53,5 +54,4 @@ class Permission extends Model implements PermissionContract
         $role = Role::get(['name' => $role]);
         $this->roles()->detach($role);
     }
-
 }
