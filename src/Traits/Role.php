@@ -15,10 +15,10 @@ trait Role
     public function permissions()
     {
         return $this->belongsToMany(
-            \xiaodi\Permission\Model\Permission::class,
-            \xiaodi\Permission\Model\RolePermissionAccess::class,
-            'permission_id',
-            'role_id'
+            config('permission.permission.model'),
+            config('permission.role_permission_access'),
+            config('permission.permission.froeign_key'),
+            config('permission.role.froeign_key')
         );
     }
 
@@ -30,10 +30,10 @@ trait Role
     public function users()
     {
         return $this->belongsToMany(
-            \xiaodi\Permission\Model\User::class,
-            \xiaodi\Permission\Model\UserRoleAccess::class,
-            'user_id',
-            'role_id'
+            config('permission.user.model'),
+            config('permission.user_role_access'),
+            config('permission.user.froeign_key'),
+            config('permission.role.froeign_key')
         );
     }
 

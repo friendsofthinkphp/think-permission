@@ -14,10 +14,10 @@ trait Permission
     public function roles()
     {
         return $this->belongsToMany(
-            \xiaodi\Permission\Model\Role::class,
-            \xiaodi\Permission\Model\RolePermissionAccess::class,
-            'role_id',
-            'permission_id'
+            config('permission.role.model'),
+            config('permission.user_role_access'),
+            config('permission.role.froeign_key'),
+            config('permission.permission.froeign_key')
         );
     }
 

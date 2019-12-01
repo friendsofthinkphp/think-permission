@@ -32,4 +32,11 @@ interface UserContract
      * @return void
      */
     public static function findByName($name);
+
+    /**
+     * 是否超级管理员
+     *
+     * @return boolean
+     */
+    public function isSuper();
 }

@@ -15,10 +15,10 @@ trait User
     public function roles()
     {
         return $this->belongsToMany(
-            \xiaodi\Permission\Model\Role::class,
-            \xiaodi\Permission\Model\UserRoleAccess::class,
-            'role_id',
-            'user_id'
+            config('permission.role.model'),
+            config('permission.user_role_access'),
+            config('permission.role.froeign_key'),
+            config('permission.user.froeign_key')
         );
     }
 
@@ -71,8 +71,24 @@ trait User
         return in_array($permission, $permissions);
     }
 
+    /**
+     * 获取用户
+     *
+     * @param string $name
+     * @return void
+     */
     public static function findByName($name)
     {
         return self::where(['name' => $name])->find();
+    }
+
+    /**
+     * 是否超级管理员
+     *
+     * @return boolean
+     */
+    public function isSuper()
+    {
+        return $this->id == config('permission.super_id');
     }
 }
