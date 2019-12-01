@@ -72,9 +72,10 @@ trait User
     }
 
     /**
-     * 获取用户
+     * 获取用户.
      *
      * @param string $name
+     *
      * @return void
      */
     public static function findByName($name)
@@ -83,9 +84,9 @@ trait User
     }
 
     /**
-     * 是否超级管理员
+     * 是否超级管理员.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuper()
     {

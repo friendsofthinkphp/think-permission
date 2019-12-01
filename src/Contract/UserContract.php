@@ -34,9 +34,9 @@ interface UserContract
     public static function findByName($name);
 
     /**
-     * 是否超级管理员
+     * 是否超级管理员.
      *
-     * @return boolean
+     * @return bool
      */
     public function isSuper();
 }
