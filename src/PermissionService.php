@@ -2,7 +2,7 @@
 
 namespace xiaodi\Permission;
 
-class PermissionProvider
+class PermissionService
 {
     public function register()
     {
