@@ -6,7 +6,7 @@ use think\Model;
 use xiaodi\Permission\Contract\RoleContract;
 
 /**
- * 角色
+ * 角色.
  */
 class Role extends Model implements RoleContract
 {

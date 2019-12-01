@@ -7,7 +7,6 @@ use xiaodi\Permission\Contract\UserContract;
 
 trait User
 {
-
     /**
      * 获取用户下所有角色.
      *

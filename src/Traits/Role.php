@@ -86,8 +86,8 @@ trait Role
     }
 
     /**
-     * 通过名称查找角色
-     * 
+     * 通过名称查找角色.
+     *
      * @param string $name
      */
     public static function findByName($name)

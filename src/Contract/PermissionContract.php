@@ -2,8 +2,6 @@
 
 namespace xiaodi\Permission\Contract;
 
-use xiaodi\Permission\Contract\RoleContract;
-
 interface PermissionContract
 {
     /**

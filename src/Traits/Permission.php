@@ -2,7 +2,6 @@
 
 namespace xiaodi\Permission\Traits;
 
-use xiaodi\Permission\Model\Role;
 use xiaodi\Permission\Contract\RoleContract;
 
 trait Permission

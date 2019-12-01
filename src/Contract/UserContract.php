@@ -10,7 +10,7 @@ interface UserContract
      * 将用户分配到指定角色.
      *
      * @param \xiaodi\Permission\Contract\RoleContract $role
-     * 
+     *
      * @return void
      */
     public function assignRole(RoleContract $role);
