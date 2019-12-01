@@ -2,6 +2,8 @@
 
 namespace xiaodi\Permission\Contract;
 
+use xiaodi\Permission\Contract\RoleContract;
+
 interface PermissionContract
 {
     /**
@@ -18,14 +20,19 @@ interface PermissionContract
      *
      * @return void
      */
-    public function assignRole($role);
+    public function assignRole(RoleContract $role);
 
     /**
-     * 把当前权限移除到指定角色.
+     * 把当前权限移除指定角色.
      *
      * @param [type] $permission
      *
      * @return void
      */
-    public function removeRole($role);
+    public function removeRole(RoleContract $role);
+
+    /**
+     * 通过名称查找规则.
+     */
+    public static function findByName($name);
 }

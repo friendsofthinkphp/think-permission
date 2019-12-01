@@ -1,6 +1,6 @@
 {
-    "name": "xiaodii/think-permission",
-    "description": "ThinkPHP5.1 权限包",
+    "name": "xiaodi/think-permission",
+    "description": "ThinkPHP6 权限包",
     "authors": [
         {
             "name": "xiaodi",
@@ -15,12 +15,22 @@
     "minimum-stability": "dev",
     "license": "MIT",
     "require": {
-        "php": ">=5.6.0",
+        "php": ">=7.0",
         "lcobucci/jwt": "^3.3"
     },
     "autoload": {
         "psr-4": {
             "xiaodi\\Permission\\": "src"
+        }
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "xiaodi\\Permission\\PermissionService"
+            ],
+            "config": {
+                "permission": "config/config.php"
+            }
         }
     }
 }

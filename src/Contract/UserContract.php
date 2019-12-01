@@ -9,16 +9,27 @@ interface UserContract
     /**
      * 将用户分配到指定角色.
      *
+     * @param \xiaodi\Permission\Contract\RoleContract $role
+     * 
      * @return void
      */
-    public function assignRole($role);
+    public function assignRole(RoleContract $role);
 
     /**
      * 删除指定角色.
      *
-     * @param [type] $role
+     * @param \xiaodi\Permission\Contract\RoleContract $role
      *
      * @return void
      */
-    public function removeRole($role);
+    public function removeRole(RoleContract $role);
+
+    /**
+     * 按名称查找用户.
+     *
+     * @param string $name
+     *
+     * @return void
+     */
+    public static function findByName($name);
 }
