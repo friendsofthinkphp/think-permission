@@ -27,4 +27,7 @@ return [
 
     // 用户与角色中间表模型
     'user_role_access' => \xiaodi\Permission\Model\UserRoleAccess::class,
+
+    // 中间件
+    'middleware' => ''
 ];

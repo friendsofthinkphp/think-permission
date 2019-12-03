@@ -2,11 +2,11 @@
 
 namespace xiaodi\Permission;
 
-class PermissionService
+class PermissionService extends \think\Service
 {
     public function register()
     {
-        // TODO
+        $this->app->bind(Permission::class);
     }
 
     public function boot()

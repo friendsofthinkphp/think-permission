@@ -2,10 +2,31 @@
 
 namespace xiaodi\Permission\Middleware;
 
-class Permission
+use think\App;
+use xiaodi\Permission\Permission as Ac;
+
+/**
+ * 权限中间件
+ * 
+ */
+final class Permission
 {
-    public function handle($request, \Closure $next, $permissions)
+    private $user;
+
+    private $handle;
+
+    public function __construct(Ac $permission)
     {
+        $this->user = $permission->user();
+        $this->handle = $permission->handleMiddleware();
+    }
+
+    public function handle($request, \Closure $next, $permission)
+    {
+        if (false === $this->user->can($permission)) {
+            return $this->handle->handleNotAllow($permission);
+        }
+
         // TODO
         return $next($request);
     }
