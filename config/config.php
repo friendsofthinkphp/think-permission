@@ -29,5 +29,5 @@ return [
     'user_role_access' => \xiaodi\Permission\Model\UserRoleAccess::class,
 
     // 中间件
-    'middleware' => ''
+    'middleware' => '',
 ];

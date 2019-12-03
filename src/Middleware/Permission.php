@@ -2,12 +2,10 @@
 
 namespace xiaodi\Permission\Middleware;
 
-use think\App;
 use xiaodi\Permission\Permission as Ac;
 
 /**
- * 权限中间件
- * 
+ * 权限中间件.
  */
 final class Permission
 {
