@@ -4,6 +4,7 @@ namespace xiaodi\Permission;
 
 use think\App;
 use xiaodi\Permission\Contract\PermissionHandleContract;
+use xiaodi\Permission\Contract\UserContract;
 
 class Permission
 {
@@ -21,6 +22,10 @@ class Permission
     {
         if (!$this->app->user) {
             throw new \Exception('没有注入用户模型');
+        }
+
+        if (false === $this->app->user instanceof UserContract) {
+            throw new \Exception('not implement xiaodi\Permission\Contract\UserContract');
         }
 
         return $this->app->user;

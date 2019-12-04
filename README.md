@@ -117,6 +117,7 @@ $role->removeUser($user);
 ```
 
 ### 权限判断
+#### 手动
 ```php
 use xiaodi\Permission\Model\User;
 
@@ -127,3 +128,5 @@ if ($user->can('home')) {
     // 无 `home`权限
 }
 ```
+
+#### 中间件
