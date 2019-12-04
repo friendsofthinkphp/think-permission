@@ -4,8 +4,8 @@ namespace xiaodi\Permission\Middleware;
 
 use think\Request;
 use think\Response;
-use xiaodi\Permission\Contract\UserContract;
 use xiaodi\Permission\Contract\PermissionMiddlewareContract;
+use xiaodi\Permission\Contract\UserContract;
 
 /**
  * 权限中间件.
@@ -18,8 +18,7 @@ class Permission implements PermissionMiddlewareContract
             return $this->handleNotLoggedIn($request);
         }
 
-        if (false === $this->requestHasPermission($request, $request->user, $permission))
-        {
+        if (false === $this->requestHasPermission($request, $request->user, $permission)) {
             return $this->handleNoAuthority($request);
         }
 
@@ -27,11 +26,12 @@ class Permission implements PermissionMiddlewareContract
     }
 
     /**
-     * 检查是否有权限
+     * 检查是否有权限.
      *
-     * @param Request $request
+     * @param Request      $request
      * @param UserContract $user
-     * @param [type] $permission
+     * @param [type]       $permission
+     *
      * @return void
      */
     public function requestHasPermission(Request $request, UserContract $user, $permission)
@@ -43,10 +43,11 @@ class Permission implements PermissionMiddlewareContract
         return true;
     }
 
-     /**
-     * 用户未登录
+    /**
+     * 用户未登录.
      *
      * @param Request $request
+     *
      * @return void
      */
     public function handleNotLoggedIn(Request $request): Response
@@ -55,9 +56,10 @@ class Permission implements PermissionMiddlewareContract
     }
 
     /**
-     * 没有权限
+     * 没有权限.
      *
      * @param Request $request
+     *
      * @return void
      */
     public function handleNoAuthority(Request $request): Response
