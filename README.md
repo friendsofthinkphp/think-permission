@@ -129,4 +129,48 @@ if ($user->can('home')) {
 }
 ```
 
-#### 中间件
+#### 路由守护
+用户信息，请手动注入到`$request->user`上，并且使用 `\xiaodi\Permission\Contract\UserContract` 接口。 [Demo](#中间件注入用户)
+`/home` 路由添加一条权限控制 访问者有 `home`权限才能允许访问
+```php
+Route::post('/home', 'home/index')->middleware('auth', 'home');
+```
+
+### 中间件注入用户
+#### 用户模型
+```php
+<?php
+
+namespace app\model;
+
+use think\Request;
+use xiaodi\Permission\Contract\UserContract;
+
+class User implements UserContract
+{
+    use \xiaodi\Permission\Traits\User;
+}
+```
+
+#### 注入用户信息
+```php
+<?php
+
+namespace app\middleware;
+
+use think\Request;
+use app\model\User;
+
+class Auth
+{
+    public function handle($request, \Closure $next)
+    {
+        $uid = 1;
+        $user = User::find($uid);
+
+        $request->user = $user;
+        return $next($request);
+    }
+}
+
+```
