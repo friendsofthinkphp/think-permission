@@ -2,21 +2,23 @@
 
 namespace xiaodi\Permission\Contract;
 
+use think\model\relation\BelongsToMany;
+
 interface RoleContract
 {
     /**
      * 获取角色下所有权限.
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function permissions();
+    public function permissions(): BelongsToMany;
 
     /**
      * 获取角色下所有用户.
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function users();
+    public function users(): BelongsToMany;
 
     /**
      * 为当前角色分配一个权限.
@@ -35,6 +37,13 @@ interface RoleContract
      * @return void
      */
     public function removePermission(PermissionContract $permission);
+
+    /**
+     * 为当前角色移除所有权限.
+     *
+     * @return void
+     */
+    public function removeAllPermission();
 
     /**
      * 将当前角色分配到指定用户.

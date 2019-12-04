@@ -4,15 +4,16 @@ namespace xiaodi\Permission\Traits;
 
 use xiaodi\Permission\Contract\PermissionContract;
 use xiaodi\Permission\Contract\UserContract;
+use think\model\relation\BelongsToMany;
 
 trait Role
 {
     /**
      * 获取角色下所有权限.
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function permissions()
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(
             config('permission.permission.model'),
@@ -25,9 +26,9 @@ trait Role
     /**
      * 获取角色下所有用户.
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(
             config('permission.user.model'),
@@ -59,6 +60,22 @@ trait Role
     public function removePermission(PermissionContract $permission)
     {
         $this->permissions()->detach($permission);
+    }
+
+    /**
+     * 为当前角色移除所有权限.
+     *
+     * @param [type] $permission
+     *
+     * @return void
+     */
+    public function removeAllPermission()
+    {
+        $permissions = $this->permissions;
+
+        foreach ($permissions as $permission) {
+            $this->removePermission($permission);
+        }
     }
 
     /**

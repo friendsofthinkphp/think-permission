@@ -3,6 +3,7 @@
 namespace xiaodi\Permission\Traits;
 
 use xiaodi\Permission\Contract\RoleContract;
+use think\model\relation\BelongsToMany;
 
 trait Permission
 {
@@ -11,7 +12,7 @@ trait Permission
      *
      * @return BelongsToMany
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
             config('permission.role.model'),

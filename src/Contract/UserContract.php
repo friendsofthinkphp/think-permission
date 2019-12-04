@@ -2,8 +2,24 @@
 
 namespace xiaodi\Permission\Contract;
 
+use think\Collection;
+use think\model\relation\BelongsToMany;
+
 interface UserContract
 {
+    /**
+     * 获取用户下所有角色.
+     *
+     * @return BelongsToMany
+     */
+    public function roles(): BelongsToMany;
+
+    /**
+     * 是否有此权限.
+     *
+     * @param string $permission
+     * @return boolean
+     */
     public function can($permission);
 
     /**
@@ -39,4 +55,11 @@ interface UserContract
      * @return bool
      */
     public function isSuper();
+
+    /**
+     * 获取用户权限（所属分组）.
+     *
+     * @return void
+     */
+    public function getAllPermissions(): Collection;
 }

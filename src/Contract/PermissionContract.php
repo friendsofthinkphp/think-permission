@@ -2,14 +2,16 @@
 
 namespace xiaodi\Permission\Contract;
 
+use think\model\relation\BelongsToMany;
+
 interface PermissionContract
 {
     /**
      * 获取有此权限的角色列表.
      *
-     * @return void
+     * @return BelongsToMany
      */
-    public function roles();
+    public function roles(): BelongsToMany;
 
     /**
      * 将当前权限分配到指定角色.

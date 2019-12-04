@@ -2,8 +2,10 @@
 
 namespace xiaodi\Permission\Traits;
 
+use think\Collection;
+use xiaodi\Permission\Model\Permission;
 use xiaodi\Permission\Contract\RoleContract;
-use xiaodi\Permission\Contract\UserContract;
+use think\model\relation\BelongsToMany;
 
 trait User
 {
@@ -12,7 +14,7 @@ trait User
      *
      * @return void
      */
-    public function roles()
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
             config('permission.role.model'),
@@ -42,11 +44,6 @@ trait User
     public function removeRole(RoleContract $role)
     {
         $this->roles()->detach($role);
-    }
-
-    public function assignUser(UserContract $user)
-    {
-        $this->users()->detach($user);
     }
 
     /**
@@ -91,5 +88,22 @@ trait User
     public function isSuper()
     {
         return $this->id == config('permission.super_id');
+    }
+
+    /**
+     * 获取用户权限（所属分组）.
+     *
+     * @return void
+     */
+    public function getAllPermissions(): Collection
+    {
+        $permissions = [];
+        foreach ($this->roles as $role) {
+            $permissions = array_unique(array_merge($permissions, $role->permissions->column('id')));
+        }
+
+        $permissions = Permission::whereIn('id', implode(',', $permissions))->select();
+
+        return $permissions;
     }
 }
