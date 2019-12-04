@@ -8,8 +8,7 @@ use xiaodi\Permission\Contract\UserContract;
 use xiaodi\Permission\Contract\PermissionMiddlewareContract;
 
 /**
- * 权限中间件
- * 
+ * 权限中间件.
  */
 class Permission implements PermissionMiddlewareContract
 {
