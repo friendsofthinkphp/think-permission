@@ -3,9 +3,9 @@
 namespace xiaodi\Permission\Traits;
 
 use think\Collection;
-use xiaodi\Permission\Model\Permission;
-use xiaodi\Permission\Contract\RoleContract;
 use think\model\relation\BelongsToMany;
+use xiaodi\Permission\Contract\RoleContract;
+use xiaodi\Permission\Model\Permission;
 
 trait User
 {
