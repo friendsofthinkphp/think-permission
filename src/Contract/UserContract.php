@@ -18,7 +18,8 @@ interface UserContract
      * 是否有此权限.
      *
      * @param string $permission
-     * @return boolean
+     *
+     * @return bool
      */
     public function can($permission);
 

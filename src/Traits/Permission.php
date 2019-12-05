@@ -2,8 +2,8 @@
 
 namespace xiaodi\Permission\Traits;
 
-use xiaodi\Permission\Contract\RoleContract;
 use think\model\relation\BelongsToMany;
+use xiaodi\Permission\Contract\RoleContract;
 
 trait Permission
 {
