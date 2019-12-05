@@ -72,6 +72,7 @@ trait User
         }
 
         $permissions = $this->getAllPermissions()->column('name');
+
         return in_array($permission, $permissions);
     }
 
