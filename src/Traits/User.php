@@ -47,6 +47,18 @@ trait User
     }
 
     /**
+     * 删除所有已绑定的角色.
+     *
+     * @return void
+     */
+    public function removeAllRole()
+    {
+        $this->roles()->detach(
+            $this->roles()->column('id')
+        );
+    }
+
+    /**
      * 检查是否有此权限.
      *
      * @param [type] $permission
@@ -55,16 +67,11 @@ trait User
      */
     public function can($permission)
     {
-        $permissions = [];
-        foreach ($this->roles as $role) {
-            $permissions = array_merge(
-                $permissions,
-                array_column($role->permissions->toArray(), 'name')
-            );
+        if ($this->isSuper()) {
+            return true;
         }
 
-        $permissions = array_unique($permissions);
-
+        $permissions = $this->getAllPermissions()->column('name');
         return in_array($permission, $permissions);
     }
 
@@ -99,10 +106,10 @@ trait User
     {
         $permissions = [];
         foreach ($this->roles as $role) {
-            $permissions = array_unique(array_merge($permissions, $role->permissions->column('id')));
+            $permissions = array_unique(array_merge($permissions, $role->permissions->column('name')));
         }
 
-        $permissions = Permission::whereIn('id', implode(',', $permissions))->select();
+        $permissions = Permission::whereIn('name', implode(',', $permissions))->select();
 
         return $permissions;
     }

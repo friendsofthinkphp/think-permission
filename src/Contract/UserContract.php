@@ -41,6 +41,13 @@ interface UserContract
     public function removeRole(RoleContract $role);
 
     /**
+     * 删除所有已绑定的角色.
+     *
+     * @return void
+     */
+    public function removeAllRole();
+
+    /**
      * 按名称查找用户.
      *
      * @param string $name
