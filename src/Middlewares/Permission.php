@@ -1,20 +1,21 @@
 <?php
+
 namespace xiaodi\Permission\Middlewares;
 
 use xiaodi\Permission\Exceptions\UnauthorizedException;
 
 /**
- * 权限验证中间件(验证规则专用)
- * 
+ * 权限验证中间件(验证规则专用).
  */
 class Permission
 {
     /**
-     * 入口
+     * 入口.
      *
-     * @param [type] $request
+     * @param [type]   $request
      * @param \Closure $next
-     * @param [type] $permissions 验证的规则
+     * @param [type]   $permissions 验证的规则
+     *
      * @return void
      */
     public function handle($request, \Closure $next, $permissions)

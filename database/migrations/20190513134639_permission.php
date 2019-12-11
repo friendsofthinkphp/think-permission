@@ -1,7 +1,6 @@
 <?php
 
 use think\migration\Migrator;
-use think\migration\db\Column;
 
 class Permission extends Migrator
 {
@@ -31,36 +30,36 @@ class Permission extends Migrator
         $tables = config('permission.tables');
 
         // 规则表
-        $table = $this->table($tables['permission'], array('engine'=>'MyISAM'));
-        $table->addColumn('name', 'string', array('limit' => 100,'comment'=>'规则名称'))
-            ->addIndex(array('name'), array('unique' => true))
+        $table = $this->table($tables['permission'], ['engine'=>'MyISAM']);
+        $table->addColumn('name', 'string', ['limit' => 100, 'comment'=>'规则名称'])
+            ->addIndex(['name'], ['unique' => true])
             ->create();
 
         // 角色表
-        $table = $this->table($tables['role'], array('engine'=>'MyISAM'));
-        $table->addColumn('name', 'string', array('limit' => 100,'comment'=>'角色名称'))
-            ->addIndex(array('name'), array('unique' => true))
+        $table = $this->table($tables['role'], ['engine'=>'MyISAM']);
+        $table->addColumn('name', 'string', ['limit' => 100, 'comment'=>'角色名称'])
+            ->addIndex(['name'], ['unique' => true])
             ->create();
 
         // 角色与规则 多对多中间表
-        $table = $this->table($tables['role_permission_access'], array('engine'=>'MyISAM'));
-        $table->addColumn('role_id', 'integer', array('comment'=>'角色主键'))
-            ->addColumn('permission_id', 'integer', array('comment'=>'规则主键'))
-            ->addIndex(array('permission_id', 'role_id'), array('unique' => true))
+        $table = $this->table($tables['role_permission_access'], ['engine'=>'MyISAM']);
+        $table->addColumn('role_id', 'integer', ['comment'=>'角色主键'])
+            ->addColumn('permission_id', 'integer', ['comment'=>'规则主键'])
+            ->addIndex(['permission_id', 'role_id'], ['unique' => true])
             ->create();
-        
+
         // 角色与用户 多对多中间表
-        $table = $this->table($tables['user_role_access'], array('engine'=>'MyISAM'));
-        $table->addColumn('user_id', 'integer', array('comment'=>'用户id'))
-            ->addColumn('role_id', 'integer', array('comment'=>'角色id'))
-            ->addIndex(array('user_id', 'role_id'), array('unique' => true))
+        $table = $this->table($tables['user_role_access'], ['engine'=>'MyISAM']);
+        $table->addColumn('user_id', 'integer', ['comment'=>'用户id'])
+            ->addColumn('role_id', 'integer', ['comment'=>'角色id'])
+            ->addIndex(['user_id', 'role_id'], ['unique' => true])
             ->create();
-        
+
         // 多态关联(用户与角色中间表)
-        $table = $this->table($tables['has_permission'], array('engine'=>'MyISAM'));
-        $table->addColumn('content', 'string', array('limit' => 50))
-            ->addColumn('model_id', 'integer', array('comment'=>'模型主键'))
-            ->addColumn('model_type', 'string', array('limit' => 50,'comment'=>'模型命名空间'))
+        $table = $this->table($tables['has_permission'], ['engine'=>'MyISAM']);
+        $table->addColumn('content', 'string', ['limit' => 50])
+            ->addColumn('model_id', 'integer', ['comment'=>'模型主键'])
+            ->addColumn('model_type', 'string', ['limit' => 50, 'comment'=>'模型命名空间'])
             ->create();
     }
 }

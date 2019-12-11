@@ -1,16 +1,15 @@
 <?php
+
 namespace xiaodi\Permission\Models;
 
 use think\Model;
-
 use think\model\relation\BelongsToMany;
-use xiaodi\Permission\Traits\HasRoles;
-use xiaodi\Permission\Traits\HasPermissions;
 use xiaodi\Permission\Contract\Role as RoleContract;
+use xiaodi\Permission\Traits\HasPermissions;
+use xiaodi\Permission\Traits\HasRoles;
 
 /**
- * 角色模型
- * 
+ * 角色模型.
  */
 class Role extends Model implements RoleContract
 {
@@ -42,7 +41,7 @@ class Role extends Model implements RoleContract
     }
 
     /**
-     * 获取(用户直接，角色)分配的权限
+     * 获取(用户直接，角色)分配的权限.
      *
      * @return void
      */
@@ -55,7 +54,7 @@ class Role extends Model implements RoleContract
     }
 
     /**
-     * 删除角色所有权限
+     * 删除角色所有权限.
      *
      * @return void
      */
@@ -73,29 +72,32 @@ class Role extends Model implements RoleContract
     }
 
     /**
-     * 通过id获取详情
+     * 通过id获取详情.
      *
-     * @param integer $id
+     * @param int $id
+     *
      * @return void
      */
     public function getById(int $id)
     {
         $res = $this->get($id);
+
         return $res;
     }
 
     /**
-     * 通过name获取详情
+     * 通过name获取详情.
      *
      * @param string $name
+     *
      * @return void
      */
     public function getByName(string $name)
     {
         $res = $this->get([
-            'name' => $name
+            'name' => $name,
         ]);
-        
+
         return $res;
     }
 }

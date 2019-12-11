@@ -1,16 +1,16 @@
 <?php
+
 namespace xiaodi\Permission\Traits;
 
 use think\model\relation\BelongsToMany;
 
 /**
- * 角色复用
- * 
+ * 角色复用.
  */
 trait HasRoles
 {
     /**
-     * 获取用户所有的角色
+     * 获取用户所有的角色.
      *
      * @return BelongsToMany
      */
@@ -27,7 +27,7 @@ trait HasRoles
     }
 
     /**
-     * 获取当前角色下的所有用户
+     * 获取当前角色下的所有用户.
      *
      * @return void
      */

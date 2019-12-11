@@ -1,13 +1,11 @@
 <?php
+
 namespace xiaodi\Permission\Models;
 
-use think\Db;
 use think\Model;
-use xiaodi\Permission\Validate\User as Validate;
-use xiaodi\Permission\Traits\HasRoles;
-use xiaodi\Permission\Traits\HasPermissions;
 use xiaodi\Permission\Contract\User as UserContract;
-use think\model\relation\BelongsToMany;
+use xiaodi\Permission\Traits\HasPermissions;
+use xiaodi\Permission\Traits\HasRoles;
 
 class User extends Model implements UserContract
 {
@@ -21,21 +19,22 @@ class User extends Model implements UserContract
         if ($prefix) {
             $table = implode('', [$prefix, $table]);
         }
-        
+
         $this->table = $table;
         parent::__construct($data);
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param [type] $roles
+     *
      * @return void
      */
     public function assignRole($roles)
     {
         $class = config('permission.models.role');
-        $model = new $class;
+        $model = new $class();
 
         $roles = $model->where('name', 'in', $roles)->select();
 
@@ -55,7 +54,7 @@ class User extends Model implements UserContract
     public function getByName(string $name)
     {
         $user = $this->get([
-            'name' => $name
+            'name' => $name,
         ]);
 
         return $user;

@@ -1,4 +1,5 @@
 <?php
+
 namespace xiaodi\Permission\Contract;
 
 use think\model\relation\BelongsToMany;
@@ -14,5 +15,4 @@ interface Role
     public function getById(int $id);
 
     public function getByName(string $name);
-
 }

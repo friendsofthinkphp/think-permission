@@ -1,10 +1,11 @@
 <?php
+
 namespace xiaodi\Permission;
 
-use xiaodi\Permission\Models\User;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\ValidationData;
 use think\facade\Config;
+use xiaodi\Permission\Models\User;
 
 class PermissionProvider
 {
@@ -14,7 +15,7 @@ class PermissionProvider
 
     protected $config = [
         'auth_super_id'     => 1,
-    
+
         'models' => [
             'user' => \xiaodi\Permission\Models\User::class,
 
@@ -22,13 +23,13 @@ class PermissionProvider
 
             'has_permission' => \xiaodi\Permission\Models\HasPermissionAccess::class,
 
-            'permission' => \xiaodi\Permission\Models\Permission::class
+            'permission' => \xiaodi\Permission\Models\Permission::class,
         ],
 
         'tables' => [
             // 用户表
             'user' => 'auth_user',
-            
+
             // 角色表
             'role' => 'auth_role',
 
@@ -42,19 +43,19 @@ class PermissionProvider
             'role_permission_access' => 'auth_role_permission_access',
 
             // 用户与角色 多对多 中间表
-            'user_role_access' => 'auth_user_role_access'
+            'user_role_access' => 'auth_user_role_access',
         ],
 
         'validate' => [
             'type' => '1',      // 认证方式 1: Jwt-token；2: Session
-            'jwt' => [
+            'jwt'  => [
                 'header' => 'authorization',
-                'key' => 'uid'  // 签发参数 claim 
+                'key'    => 'uid',  // 签发参数 claim
             ],
             'session' => [
-                'key' => 'uid'  // session name
-            ]
-        ]
+                'key' => 'uid',  // session name
+            ],
+        ],
     ];
 
     public function __construct()
@@ -64,7 +65,7 @@ class PermissionProvider
             $config = config('permission.');
             $this->config = array_merge($this->config, $config);
         }
-        
+
         $this->request = request();
     }
 

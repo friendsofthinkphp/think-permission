@@ -1,4 +1,5 @@
 <?php
+
 namespace xiaodi\Permission\Exceptions;
 
 use InvalidArgumentException;

@@ -1,4 +1,5 @@
 <?php
+
 namespace xiaodi\Permission\Models;
 
 use think\Model;
@@ -6,8 +7,7 @@ use think\model\relation\BelongsToMany;
 use xiaodi\Permission\Contract\Permission as PermissionContract;
 
 /**
- * 权限模型
- * 
+ * 权限模型.
  */
 class Permission extends Model implements PermissionContract
 {
@@ -22,9 +22,9 @@ class Permission extends Model implements PermissionContract
 
         parent::__construct($data);
     }
-    
+
     /**
-     * 获取具有此权限的角色
+     * 获取具有此权限的角色.
      *
      * @return BelongsToMany
      */
@@ -41,15 +41,16 @@ class Permission extends Model implements PermissionContract
     }
 
     /**
-     * 将规则分配到角色
+     * 将规则分配到角色.
      *
      * @param [type] $roles
+     *
      * @return void
      */
     public function assignRole(...$roles)
     {
         $class = config('permission.models.role');
-        $model = new $class;
+        $model = new $class();
 
         $roles = $model->where('name', 'in', $roles)->select();
 
@@ -59,21 +60,21 @@ class Permission extends Model implements PermissionContract
             $permission = $this->toArray()['name'];
 
             // 插入到权限表
-            foreach($roles as $role) {
+            foreach ($roles as $role) {
                 $role->givePermissionTo($permission);
             }
         }
     }
 
     /**
-     * 删除角色权限
+     * 删除角色权限.
      *
      * @return void
      */
     public function removeRole(...$roles)
     {
         $class = config('permission.models.role');
-        $model = new $class;
+        $model = new $class();
 
         $roles = $model->where('name', 'in', $roles)->select();
 
@@ -81,7 +82,7 @@ class Permission extends Model implements PermissionContract
         $this->roles()->detach($this->id);
 
         $name = $this->toArray()['name'];
-        foreach($roles as $role) {
+        foreach ($roles as $role) {
             $role->revokePermissionTo($name);
         }
     }
