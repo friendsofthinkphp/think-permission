@@ -8,7 +8,7 @@ ThinkPHP6 权限包
 
 ### 安装
 ```
-composer require xiaodi/think-permission:dev-master
+composer require xiaodi/think-permission
 ```
 
 ### 使用
