@@ -104,19 +104,20 @@ trait User
      * @return void
      */
     public function getAllPermissions(): Collection
-    {        
+    {
         // 超级管理员 默认全部规则
         if ($this->isSuper()) {
-           return Permission::select();
+            return Permission::select();
         }
 
         $permissions = [];
-        
+
         foreach ($this->roles as $role) {
             $permissions = array_unique(array_merge($permissions, $role->permissions->column('name')));
         }
 
         $permissions = Permission::whereIn('name', implode(',', $permissions))->select();
+
         return $permissions;
     }
 }
