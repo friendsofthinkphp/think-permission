@@ -12,7 +12,7 @@ trait User
     /**
      * 获取用户下所有角色.
      *
-     * @return void
+     * @return BelongsToMany
      */
     public function roles(): BelongsToMany
     {
@@ -101,7 +101,7 @@ trait User
     /**
      * 获取用户权限（所属分组）.
      *
-     * @return void
+     * @return Collection
      */
     public function getAllPermissions(): Collection
     {
