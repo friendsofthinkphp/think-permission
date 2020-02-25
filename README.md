@@ -224,3 +224,18 @@ CREATE TABLE `user_role_access` (
   PRIMARY KEY (`user_id`,`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
+
+### 中间件
+
+角色中间件
+```php
+#route/app.php
+
+use xiaodi\Permission\Middleware\Role;
+
+# 拥有 edit角色的用户 可以访问此路由
+Route::rule('/testRole', function(){
+  return 'edit';
+}, 'GET')->allowCrossDomain()->middleware(Role::class, 'Edit');
+
+```
