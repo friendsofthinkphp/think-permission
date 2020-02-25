@@ -226,16 +226,28 @@ CREATE TABLE `user_role_access` (
 ```
 
 ### 中间件
+默认自带以下中间件
+- 规则中间件
+- 角色中间件
+
+
+规则中间件
+```php
+#route/app.php
+
+# 拥有 edit 规则的用户 可以访问此路由
+Route::rule('/testPermission', function(){
+  return 'edit';
+}, 'GET')->allowCrossDomain()->middleware('auth.permission', 'edit');
+```
 
 角色中间件
 ```php
 #route/app.php
 
-use xiaodi\Permission\Middleware\Role;
-
-# 拥有 edit角色的用户 可以访问此路由
+# 拥有 editer 角色的用户 可以访问此路由
 Route::rule('/testRole', function(){
-  return 'edit';
-}, 'GET')->allowCrossDomain()->middleware(Role::class, 'Edit');
+  return 'editer';
+}, 'GET')->allowCrossDomain()->middleware('auth.role', 'editer');
 
 ```
