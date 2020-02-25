@@ -24,6 +24,15 @@ interface UserContract
     public function can($permission);
 
     /**
+     * 是否绑定某个角色.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role);
+
+    /**
      * 将用户分配到指定角色.
      *
      * @param \xiaodi\Permission\Contract\RoleContract $role

@@ -19,6 +19,17 @@ interface PermissionMiddlewareContract
     public function requestHasPermission(Request $request, UserContract $user, $permission);
 
     /**
+     * 检查是否有权限.
+     *
+     * @param Request      $request
+     * @param UserContract $user
+     * @param [type]       $role
+     *
+     * @return void
+     */
+    public function requestHasRole(Request $request, UserContract $user, $role);
+
+    /**
      * 用户没有权限.
      *
      * @param Request $request
