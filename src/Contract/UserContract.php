@@ -30,7 +30,7 @@ interface UserContract
      *
      * @return bool
      */
-    public function hasRole($role);
+    public function hasRole(string $role);
 
     /**
      * 将用户分配到指定角色.

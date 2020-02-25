@@ -85,6 +85,10 @@ trait User
      */
     public function hasRole(string $role)
     {
+        if ($this->isSuper()) {
+            return true;
+        }
+
         $role = $this->roles()->where('name', $role)->find();
 
         if (empty($role)) {

@@ -5,18 +5,18 @@ namespace xiaodi\Permission\Contract;
 use think\Request;
 use think\Response;
 
-interface PermissionMiddlewareContract
+interface RoleMiddlewareContract
 {
     /**
      * 检查是否有权限.
      *
      * @param Request      $request
      * @param UserContract $user
-     * @param [type]       $permission
+     * @param string       $role
      *
      * @return void
      */
-    public function requestHasPermission(Request $request, UserContract $user, $permission);
+    public function requestHasRole(Request $request, UserContract $user, string $role);
 
     /**
      * 用户没有权限.

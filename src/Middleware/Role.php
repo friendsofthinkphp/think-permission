@@ -4,13 +4,13 @@ namespace xiaodi\Permission\Middleware;
 
 use think\Request;
 use think\Response;
-use xiaodi\Permission\Contract\PermissionMiddlewareContract;
+use xiaodi\Permission\Contract\RoleMiddlewareContract;
 use xiaodi\Permission\Contract\UserContract;
 
 /**
  * 角色权限中间件.
  */
-class Role implements PermissionMiddlewareContract
+class Role implements RoleMiddlewareContract
 {
     public function handle($request, \Closure $next, $role)
     {
@@ -30,11 +30,11 @@ class Role implements PermissionMiddlewareContract
      *
      * @param Request      $request
      * @param UserContract $user
-     * @param [type]       $permission
+     * @param string       $permission
      *
      * @return void
      */
-    public function requestHasRole(Request $request, UserContract $user, $role)
+    public function requestHasRole(Request $request, UserContract $user, string $role)
     {
         if (!$user->hasRole($role)) {
             return false;
