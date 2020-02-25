@@ -80,7 +80,8 @@ trait User
      * 是否有此角色.
      *
      * @param string $role 角色名称
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasRole(string $role)
     {
