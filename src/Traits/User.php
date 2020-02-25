@@ -89,9 +89,8 @@ trait User
             return true;
         }
 
-        $role = $this->roles()->where('name', $role)->find();
-
-        if (empty($role)) {
+        $roles = $this->roles->column('name');
+        if (empty($roles) || !in_array($role, $roles)) {
             return false;
         }
 
