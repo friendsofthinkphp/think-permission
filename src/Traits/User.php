@@ -77,6 +77,23 @@ trait User
     }
 
     /**
+     * 是否有此角色.
+     *
+     * @param string $role 角色名称
+     * @return boolean
+     */
+    public function hasRole(string $role)
+    {
+        $role = $this->roles()->where('name', $role)->find();
+
+        if (empty($role)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * 获取用户.
      *
      * @param string $name
