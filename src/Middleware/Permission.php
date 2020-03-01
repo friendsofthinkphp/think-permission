@@ -32,7 +32,7 @@ class Permission implements PermissionMiddlewareContract
      * @param UserContract $user
      * @param [type]       $permission
      *
-     * @return void
+     * @return bool
      */
     public function requestHasPermission(Request $request, UserContract $user, $permission)
     {
