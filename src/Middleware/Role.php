@@ -32,7 +32,7 @@ class Role implements RoleMiddlewareContract
      * @param UserContract $user
      * @param string       $permission
      *
-     * @return void
+     * @return bool
      */
     public function requestHasRole(Request $request, UserContract $user, string $role)
     {
